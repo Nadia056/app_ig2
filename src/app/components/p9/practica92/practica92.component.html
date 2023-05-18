@@ -1,0 +1,61 @@
+
+ <br>
+  
+<div class="container">
+<h1>Data Table</h1>
+<h3>SSE</h3>
+<table class="table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Title</th>
+      <th>Author</th>
+      <th>Description</th>
+      <th>-</th>
+      <th >-</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let b of books">
+        <td>{{ b.id }}</td>
+      <td>{{ b.title }}</td>
+      <td>{{ b.author }}</td>
+      <td>{{ b.description }}</td>
+      
+      <td><button type="button" class="btn btn-primary" (click)="editBook(b)">Edit</button></td>
+      <td ><button type="button" class="btn btn-danger" (click)="deleteBook(b)">Delete</button></td></tr>
+  </tbody>
+</table>
+<a href="/crud8" class="button">Back</a>
+</div>
+
+<!-- modal content -->
+<ng-template #contenido let-modal>
+<div class="modal-header">
+    <h4 class="modal-title">Update Book</h4>
+    <button class="close" type="button" (click)="modal.dismiss()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <form (ngSubmit)="updateBook()" #form="ngForm">
+        <div class="form-outline mb-4">
+          <label for="title">Tile</label>
+          <input [(ngModel)]="selectedBook.title" type="text" id="title" name="title" class="form-control" placeholder="Update title" required>
+        </div>
+        <div class="form-outline mb-4">
+          <label for="author">Author</label>
+          <input [(ngModel)]="selectedBook.author" type="text" id="author" name="author" class="form-control" placeholder="Update author" required>
+        </div>
+        <div class="form-outline mb-4">
+          <label for="description">Description</label>
+          <input [(ngModel)]="selectedBook.description" type="text" id="description" name="description" class="form-control" placeholder="Update description" required>
+        </div>
+        
+        <button type="submit" class="btn btn-primary btn-block">Update</button>
+      </form>
+      
+</div>
+<div class="modal-footer">
+</div>
+</ng-template>
