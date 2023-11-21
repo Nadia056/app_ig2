@@ -1,8 +1,10 @@
-import { Component, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
 import { Book } from 'src/app/models/book';
 import { P7ServiceService } from 'src/app/services/p7/p7-service.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { P8ServiceService } from 'src/app/services/p8/p8-service.service';
+import { ChangeDetectorRef } from '@angular/core';
+import { NgZone } from '@angular/core';
 
 @Component({
   selector: 'app-p82',
@@ -16,72 +18,50 @@ export class P82Component {
     author: '',
     description: ''
   };
-  constructor(private p4: P8ServiceService, private modal: NgbModal) { }
+  constructor(private p4: P8ServiceService, private modal: NgbModal,private changeDetectorRef: ChangeDetectorRef,private ngZone: NgZone) { }
   
   @ViewChild('contenido') contenido: any;
 
   books: Book[] = [];
   id?: number;
-  eventSource: EventSource | undefined;
   
   ngOnInit() {
-    this.startEventSource();
+    this.listenEventSource();
+    
   }
   
-  startEventSource() {
-    const eventSource = new EventSource('http://127.0.0.1:8000/sse');
-  
-    eventSource.addEventListener('message', (event) => {
-      const bookData = JSON.parse(event.data);
-      this.handleBookUpdate(bookData);
-    });
-  
-    eventSource.addEventListener('error', (error) => {
-      // Verificar si el estado del evento es 0 (No Connect)
-      if (error.eventPhase === EventSource.CLOSED) {
-        // No mostrar mensaje de error si el evento fue cerrado intencionalmente
-        return;
-      }
-  
-      console.error('Error with SSE connection:', error);
-    });
-  
-    this.loadBooks();
+  listenEventSource() {
+    const eventSource = new EventSource('http://127.0.0.1:8000/api/event-source');
+    eventSource.onmessage = (event) => {
+      const updatedItems = JSON.parse(event.data);
+      console.log(updatedItems, 'eventSource');
+      this.books = updatedItems;
+      console.log(this.books, 'Libros eventSource');
+      this.changeDetectorRef.detectChanges();
+      
+    };
   }
   
   
-  loadBooks() {
-    this.p4.getBooks().subscribe((data: any) => {
-      this.books = data;
-      console.log(this.books, 'librossss');
-    });
-  }
-  
-  handleBookUpdate(updatedBook: Book) {
-    const index = this.books.findIndex((book) => book.id === updatedBook.id);
-    if (index !== -1) {
-      this.books[index] = updatedBook;
-    } else {
-      this.books.push(updatedBook);
-    }
-  }
-  
-  
-  
-
   editBook(book: Book) {
     this.id = book.id;
+    console.log(this.id, 'id');
     this.selectedBook = {
       title: book.title,
       author: book.author,
       description: book.description
     };
     console.log(this.selectedBook, 'libro');
+    
+  this.ngZone.run(() => {
     this.modal.open(this.contenido);
+  });
   }
 
   updateBook() {
-    const id = this.id ?? 0;
+    const id= this.id;
+    
+    console.log(id, 'id en update');
     const book: Book = {
       title: this.selectedBook?.title || '',
       author: this.selectedBook?.author || '',
@@ -89,8 +69,9 @@ export class P82Component {
     };
     this.p4.updateBook(id, book).subscribe(
       (updatedBook: Book) => {
-        this.handleBookUpdate(updatedBook);
         this.modal.dismissAll();
+        this.listenEventSource();
+
       },
       (error: any) => {
         console.error('Error updating book:', error);
@@ -108,11 +89,11 @@ export class P82Component {
       const index = this.books.findIndex((b) => b.id === book.id);
       if (index !== -1) {
         this.books.splice(index, 1);
+        this.listenEventSource();
+
       }
     });
   }
 
-  ngOnDestroy() {
-    this.eventSource?.close();
-  }
+
 }

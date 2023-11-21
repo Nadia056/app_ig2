@@ -12,6 +12,9 @@ import { FormsModule } from '@angular/forms';
 import { NgForm, ReactiveFormsModule } from '@angular/forms';
 import { P82Component } from './components/p8/p82/p82.component';
 import { Practica92Component } from './components/p9/practica92/practica92.component';
+import { GameComponent } from './components/TIC-TAC-TOE/game/game.component';
+import { MenuComponent } from './components/TIC-TAC-TOE/menu/menu.component';
+import { RegisterComponent } from './components/TIC-TAC-TOE/register/register.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +24,10 @@ import { Practica92Component } from './components/p9/practica92/practica92.compo
     Crud9Component,
     P72Component,
     P82Component,
-    Practica92Component
+    Practica92Component,
+    GameComponent,
+    MenuComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

@@ -20,7 +20,7 @@ export class P72Component {
 
   books: Book[] = [];
   id?: number;
-  pollInterval: number = 15000; // Set the polling interval to 15 seconds
+  pollInterval: number = 7000; // Set the polling interval to 15 seconds
 
   ngOnInit(): void {
     this.loadBooks();

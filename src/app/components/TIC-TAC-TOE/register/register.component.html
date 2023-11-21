@@ -1,0 +1,29 @@
+
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600' rel='stylesheet'
+  type='text/css'>
+<link href="//netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css" rel="stylesheet">
+
+<div class="testbox">
+  <h1>Registrate</h1>
+  <form (ngSubmit)="abrirC()" #form="ngForm">
+    <hr>
+    <label id="icon" for="email"><i class="icon-envelope "></i></label>
+    <input type="text" name="email" id="email" placeholder="Email" required [(ngModel)]="email" />
+
+    <label id="icon" for="name"><i class="icon-user"></i></label>
+    <input type="text" name="name" id="name" placeholder="Nombre" required [(ngModel)]="name" />
+
+    <label  id="icon" for="phone"><i class="icon-phone "></i></label>
+    <input type="text" id="phone" name="phone" maxlength="10" [(ngModel)]="phone" placeholder="Numero de telefono" required onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+
+    <label id="icon" for="password"><i class="icon-shield"></i></label>
+    <input type="password" name="password" id="password" [(ngModel)]="password" placeholder="Password" required />
+
+    <label id="icon" for="password_confirmation"><i class="icon-shield"></i></label>
+    <input type="password" name="password_confirmation" id="password_confirmation" [(ngModel)]="password_confirmation" placeholder="Password-confirmation" required />
+    <hr>
+    <button type="submit" class="btn btn-danger">Registrarme</button>
+</form>
+
+</div>
+

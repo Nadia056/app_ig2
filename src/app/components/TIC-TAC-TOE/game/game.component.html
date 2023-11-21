@@ -1,0 +1,17 @@
+<section>
+  <h1 class="game--title">Tic Tac Toe</h1>
+  <div class="game--container">
+    <div *ngFor="let row of board; let i = index" class="row">
+      <div *ngFor="let cell of row; let j = index" class="cell" (click)="makeMove(i, j)">
+        {{ cell }}
+      </div>
+    </div>
+  </div>
+  <h2 class="game--status">{{message}}</h2>
+  <button class="btn btn-danger" (click)="restart()">Restart Game</button>
+  <br>
+  <br>
+  <button class="btn btn-info" (click)="logout()">LOGOUT</button>
+
+</section>
+

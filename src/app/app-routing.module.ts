@@ -6,6 +6,9 @@ import { P82Component } from './components/p8/p82/p82.component';
 import { Crud8Component } from './components/p8/crud8/crud8.component';
 import { Crud9Component } from './components/p9/crud9/crud9.component';
 import { Practica92Component } from './components/p9/practica92/practica92.component';
+import { RegisterComponent } from './components/TIC-TAC-TOE/register/register.component';
+import { MenuComponent } from './components/TIC-TAC-TOE/menu/menu.component';
+import { GameComponent } from './components/TIC-TAC-TOE/game/game.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/crud7', pathMatch: 'full' },
@@ -14,7 +17,10 @@ const routes: Routes = [
   { path: 'crud8', component: Crud8Component },
   { path: 'edit8', component: P82Component },
   { path: 'crud9', component: Crud9Component },
-  { path: 'edit9', component: Practica92Component }
+  { path: 'edit9', component: Practica92Component },
+  { path: 'login', component: MenuComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'menu', component: GameComponent }
 ];
 
 @NgModule({

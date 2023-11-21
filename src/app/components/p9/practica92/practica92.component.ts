@@ -27,7 +27,9 @@ export class Practica92Component implements OnInit {
   books: Book[] = [];
   mensaje: any;
 
-  constructor(private p9: P9ServiceService, private modal: NgbModal) {}
+  constructor(private p9: P9ServiceService, private modal: NgbModal) {
+   
+  }
 
   ngOnInit(): void {
     this.webSocket();
